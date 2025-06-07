@@ -40,7 +40,7 @@ cd cpu-scheduler-simulator-cpp
 mkdir build && cd build
 
 # Configure and build
-cmake ..
+cmake .. -DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake
 cmake --build .
 
 # Run tests

@@ -25,22 +25,21 @@ public:
         if (ready_queue_.empty()) {
             return std::nullopt;
         }
-
-        auto next_process = ready_queue_.front();
+        auto next = ready_queue_.front();
         ready_queue_.pop();
-        
-        next_process->set_state(Process::ProcessState::RUNNING);
-        return next_process;
+        next->set_state(Process::ProcessState::RUNNING);
+        return next;
     }
 
     void preempt_process(std::shared_ptr<Process> current_process) override {
-        // FCFS is non-preemptive, so this is a no-op
-        (void)current_process;
+        if (current_process && current_process->remaining_time() > 0) {
+            current_process->set_state(Process::ProcessState::READY);
+            ready_queue_.push(current_process);
+        }
     }
 
-    bool needs_preemption(std::shared_ptr<Process> current_process, int current_time) override {
-        // FCFS is non-preemptive, only preempt when process is complete
-        return !current_process || current_process->remaining_time() <= 0;
+    bool needs_preemption(std::shared_ptr<Process>, int) override {
+        return false;  // FCFS is non-preemptive
     }
 
     std::string name() const override {

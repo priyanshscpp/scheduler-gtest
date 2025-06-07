@@ -3,6 +3,7 @@
 #include "core/scheduler.hpp"
 #include <queue>
 #include <vector>
+#include <algorithm>
 
 namespace cpu_scheduler {
 
@@ -19,30 +20,30 @@ public:
     void add_process(std::shared_ptr<Process> process) override {
         processes_[process->pid()] = process;
         process->set_state(Process::ProcessState::READY);
-        ready_queue_.push(process);
+        ready_queue_.push_back(process);
+        sort_queue();
     }
 
     std::optional<std::shared_ptr<Process>> get_next_process() override {
         if (ready_queue_.empty()) {
             return std::nullopt;
         }
-
-        // Find process with shortest burst time
-        auto shortest = ready_queue_.top();
-        ready_queue_.pop();
-        
-        shortest->set_state(Process::ProcessState::RUNNING);
-        return shortest;
+        auto next = ready_queue_.front();
+        ready_queue_.erase(ready_queue_.begin());
+        next->set_state(Process::ProcessState::RUNNING);
+        return next;
     }
 
     void preempt_process(std::shared_ptr<Process> current_process) override {
-        // SJF is non-preemptive in this implementation
-        (void)current_process;
+        if (current_process && current_process->remaining_time() > 0) {
+            current_process->set_state(Process::ProcessState::READY);
+            ready_queue_.push_back(current_process);
+            sort_queue();
+        }
     }
 
-    bool needs_preemption(std::shared_ptr<Process> current_process, int current_time) override {
-        // Only preempt when process is complete
-        return !current_process || current_process->remaining_time() <= 0;
+    bool needs_preemption(std::shared_ptr<Process>, int) override {
+        return false;  // Non-preemptive SJF
     }
 
     std::string name() const override {
@@ -54,18 +55,14 @@ public:
     }
 
 private:
-    // Custom comparator for priority queue
-    struct SJFComparator {
-        bool operator()(const std::shared_ptr<Process>& a, const std::shared_ptr<Process>& b) const {
-            return a->burst_time() > b->burst_time();
-        }
-    };
+    void sort_queue() {
+        std::sort(ready_queue_.begin(), ready_queue_.end(),
+            [](const auto& a, const auto& b) {
+                return a->remaining_time() < b->remaining_time();
+            });
+    }
 
-    std::priority_queue<
-        std::shared_ptr<Process>,
-        std::vector<std::shared_ptr<Process>>,
-        SJFComparator
-    > ready_queue_;
+    std::vector<std::shared_ptr<Process>> ready_queue_;
 };
 
 } // namespace cpu_scheduler 
