@@ -41,3 +41,29 @@ clean:
 	(rm -f *.o; rm -f main)
 
 (:
+
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -I include
+LDFLAGS = 
+
+SRC_DIR = src
+BUILD_DIR = build
+TARGET = cpu-scheduler
+
+SRCS = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/core/*.cpp)
+OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+
+$(TARGET): $(OBJS)
+	$(CXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR) $(TARGET)
+
+.PHONY: run
+run: $(TARGET)
+	./$(TARGET)

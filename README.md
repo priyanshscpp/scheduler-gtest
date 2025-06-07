@@ -1,6 +1,6 @@
 # CPU Scheduler Simulator
 
-[![Build Status](https://github.com/yourusername/cpu-scheduler-simulator-cpp/workflows/CI/badge.svg)](https://github.com/yourusername/cpu-scheduler-simulator-cpp/actions)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A production-grade CPU scheduler simulator that implements various scheduling algorithms with detailed performance analysis and visualization capabilities.
