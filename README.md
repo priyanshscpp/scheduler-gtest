@@ -21,9 +21,15 @@ A production-grade CPU scheduler simulator that implements various scheduling al
 - Comprehensive test suite
 
 
-## Component Architecture Diagram 
 
-image.png
+## Process State Transition Diagram
+
+![image](https://github.com/user-attachments/assets/a660c776-dfb0-46ea-801b-1625b4856a91)
+
+
+## Data Flow Diagram
+
+![image](https://github.com/user-attachments/assets/9c238cab-bf95-4a76-a3a7-aa35a0b5ce0d)
 
 
 ## 🚀 Getting Started
@@ -110,6 +116,12 @@ src/
     ├── metrics.hpp
     └── visualization.hpp
 ```
+
+
+## Component Architecture Diagram 
+
+![image](https://github.com/user-attachments/assets/5e065dc5-aaa3-4ab3-a87d-4a4b056e1cf5)
+
 
 ## 📈 Benchmarks
 
