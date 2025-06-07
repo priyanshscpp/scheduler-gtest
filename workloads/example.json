@@ -1,0 +1,40 @@
+{
+    "processes": [
+        {
+            "arrival_time": 0,
+            "burst_time": 8,
+            "priority": 2,
+            "description": "Long running, medium priority process"
+        },
+        {
+            "arrival_time": 1,
+            "burst_time": 4,
+            "priority": 1,
+            "description": "Medium running, high priority process"
+        },
+        {
+            "arrival_time": 2,
+            "burst_time": 2,
+            "priority": 3,
+            "description": "Short running, low priority process"
+        },
+        {
+            "arrival_time": 3,
+            "burst_time": 6,
+            "priority": 2,
+            "description": "Medium running, medium priority process"
+        },
+        {
+            "arrival_time": 4,
+            "burst_time": 3,
+            "priority": 1,
+            "description": "Short running, high priority process"
+        }
+    ],
+    "metadata": {
+        "description": "Sample workload with mixed priorities and burst times",
+        "total_processes": 5,
+        "total_burst_time": 23,
+        "priority_range": [1, 3]
+    }
+} 
