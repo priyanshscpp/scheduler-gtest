@@ -20,6 +20,12 @@ A production-grade CPU scheduler simulator that implements various scheduling al
 - Context switch overhead simulation
 - Comprehensive test suite
 
+
+## Component Architecture Diagram 
+
+image.png
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
